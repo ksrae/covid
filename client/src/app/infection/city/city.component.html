@@ -1,0 +1,7 @@
+<p>city works!</p>
+
+<ul *ngIf="(infectionData$ | async) as infectionData">
+  <li *ngFor="let item of infectionData">
+    {{item | json}}
+  </li>
+</ul>
