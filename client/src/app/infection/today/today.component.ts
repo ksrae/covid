@@ -1,5 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
-import { HttpService } from 'src/services/http.service';
+// import { HttpService } from 'src/services/http.service';
+import { TodayService } from 'src/store/today/today.service';
 import { tap, map } from 'rxjs/operators';
 
 @Component({
@@ -9,8 +10,8 @@ import { tap, map } from 'rxjs/operators';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TodayComponent implements OnInit {
-  infectionData$;
-  header;
+  data$ = this.todayService.infection$;
+
   // view: any[] = [700, 300];
   // sample;
   // // options
@@ -27,28 +28,17 @@ export class TodayComponent implements OnInit {
   // colorScheme = colorSets['natural'];
 
   constructor(
-    private httpService: HttpService
+    private todayService: TodayService
+
   ) { }
 
   ngOnInit(): void {
-    this.header = ['accDefRate', 'accExamCnt', 'accExamCompCnt', 'careCnt', 'clearCnt', 'deathCnt', 'decideCnt', 'examCnt', 'resutlNegCnt', 'createDt'];
-    this.infectionData$ = this.httpService.getToday().pipe(
-      map(data => {
-        return data.sort((a,b) => {
-          if(a['seq'] > b['seq']) {
-            return -1;
-          } else if(a['seq'] < b['seq']) {
-            return 1;
-          } else {
-            return 0;
-          }
-        })
-      })
-      // map(data => {
-
-      //   return data;
-      // })
-    );
+    this.todayService.set();
+    // this.header = ['accDefRate', 'accExamCnt', 'accExamCompCnt', 'careCnt', 'clearCnt', 'deathCnt', 'decideCnt', 'examCnt', 'resutlNegCnt', 'createDt'];
+    // this.data$ = this.todayService.todayInfection$;
+    // this.data$.subscribe(x => {
+    //   console.log('a', x);
+    // })
   }
 
   onSelect(e) {

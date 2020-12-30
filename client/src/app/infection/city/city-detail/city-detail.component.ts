@@ -1,14 +1,14 @@
-import { NationalModel } from 'src/store/national/national.model';
 import { Component, OnInit, ChangeDetectionStrategy, ViewChild, OnDestroy } from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import { Subscription } from 'rxjs';
-import { NationalService } from 'src/store/national/national.service';
+import { CityService } from 'src/store/city/city.service';
+
 @Component({
-  selector: 'national-detail',
-  templateUrl: './national-detail.component.html',
-  styleUrls: ['./national-detail.component.scss'],
+  selector: 'city-detail',
+  templateUrl: './city-detail.component.html',
+  styleUrls: ['./city-detail.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger('detailExpand', [
@@ -18,7 +18,7 @@ import { NationalService } from 'src/store/national/national.service';
     ]),
   ],
 })
-export class NationalDetailComponent implements OnInit, OnDestroy {
+export class CityDetailComponent implements OnInit, OnDestroy {
   displayedColumns: string[];
   dataSource = new MatTableDataSource();
   expandedElement;
@@ -27,14 +27,14 @@ export class NationalDetailComponent implements OnInit, OnDestroy {
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(
-    private nationalService: NationalService
+    private cityService: CityService
   ) { }
 
   ngOnInit(): void {
-    this.subscription.add(this.nationalService.infection$.subscribe(x => {
+    this.subscription.add(this.cityService.infection$.subscribe(x => {
       let dataSource = [];
       for(let source of x.items) {
-        let exist = dataSource.find(t => t?.nationNm === source?.nationNm);
+        let exist = dataSource.find(t => t?.gubun === source?.gubun);
 
         if(!exist) {
           source['history'] = [source];

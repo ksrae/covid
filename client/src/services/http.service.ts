@@ -20,7 +20,7 @@ export class HttpService {
     return this.requestData('todayInfection', this.currentDate, this.previousDate);
   }
   getNational(nation: string = '') {
-    let result = this.requestData('nationalInfection', this.currentDate, nation ? this.previousDate : this.currentDate);
+    let result = this.requestData('nationalInfection', this.currentDate, this.previousDate);
     if(nation) {
       return result.pipe(
         map(data => data.filter(x => x.nationNmEn == nation))

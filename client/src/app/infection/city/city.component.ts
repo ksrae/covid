@@ -1,6 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { HttpService } from 'src/services/http.service';
-
+import { CityService } from 'src/store/city/city.service';
 @Component({
   selector: 'app-city',
   templateUrl: './city.component.html',
@@ -8,14 +7,23 @@ import { HttpService } from 'src/services/http.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CityComponent implements OnInit {
-  infectionData$;
+  data$ = this.cityService.infection$;
 
   constructor(
-    private httpService: HttpService
+    private cityService: CityService
   ) { }
 
   ngOnInit(): void {
-    this.infectionData$ = this.httpService.getCity();
+    this.cityService.set();
+    this.data$.subscribe(x => console.log(x));
   }
-
+  onSelect(e) {
+    console.log('onSelect', e);
+  }
+  onActivate(e) {
+    console.log('onActivate', e);
+  }
+  onDeactivate(e) {
+    console.log('onDeactivate', e);
+  }
 }

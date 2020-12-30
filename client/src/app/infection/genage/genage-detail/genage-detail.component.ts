@@ -1,14 +1,14 @@
-import { NationalModel } from 'src/store/national/national.model';
+import { GenageModel } from 'src/store/genage/genage.model';
 import { Component, OnInit, ChangeDetectionStrategy, ViewChild, OnDestroy } from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import { Subscription } from 'rxjs';
-import { NationalService } from 'src/store/national/national.service';
+import { GenageService } from 'src/store/genage/genage.service';
 @Component({
-  selector: 'national-detail',
-  templateUrl: './national-detail.component.html',
-  styleUrls: ['./national-detail.component.scss'],
+  selector: 'genage-detail',
+  templateUrl: './genage-detail.component.html',
+  styleUrls: ['./genage-detail.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger('detailExpand', [
@@ -18,7 +18,7 @@ import { NationalService } from 'src/store/national/national.service';
     ]),
   ],
 })
-export class NationalDetailComponent implements OnInit, OnDestroy {
+export class GenageDetailComponent implements OnInit, OnDestroy {
   displayedColumns: string[];
   dataSource = new MatTableDataSource();
   expandedElement;
@@ -27,14 +27,14 @@ export class NationalDetailComponent implements OnInit, OnDestroy {
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(
-    private nationalService: NationalService
+    private genageService: GenageService
   ) { }
 
   ngOnInit(): void {
-    this.subscription.add(this.nationalService.infection$.subscribe(x => {
+    this.subscription.add(this.genageService.infection$.subscribe(x => {
       let dataSource = [];
       for(let source of x.items) {
-        let exist = dataSource.find(t => t?.nationNm === source?.nationNm);
+        let exist = dataSource.find(t => t?.gubun === source?.gubun);
 
         if(!exist) {
           source['history'] = [source];
@@ -47,14 +47,7 @@ export class NationalDetailComponent implements OnInit, OnDestroy {
       this.dataSource.data = dataSource;
       this.dataSource.sort = this.sort;
     }))
-
   }
-  // onSelect(item: NationalModel) {
-  //   this.expandedElement = this.expandedElement === item ? null : item;
-
-  //   // console.log(this.expandedElement);
-  // }
-
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }

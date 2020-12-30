@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { HttpService } from 'src/services/http.service';
+import { GenageService } from 'src/store/genage/genage.service';
 
 @Component({
   selector: 'app-genage',
@@ -8,14 +8,22 @@ import { HttpService } from 'src/services/http.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GenageComponent implements OnInit {
-  infectionData$;
+  data$ = this.genageService.infection$;
 
   constructor(
-    private httpService: HttpService
+    private genageService: GenageService
   ) { }
 
   ngOnInit(): void {
-    this.infectionData$ = this.httpService.getGenAge();
+    this.genageService.set();
   }
-
+  onSelect(e) {
+    console.log('onSelect', e);
+  }
+  onActivate(e) {
+    console.log('onActivate', e);
+  }
+  onDeactivate(e) {
+    console.log('onDeactivate', e);
+  }
 }

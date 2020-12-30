@@ -1,7 +1,19 @@
 <p>city works!</p>
 
-<ul *ngIf="(infectionData$ | async) as infectionData">
-  <li *ngFor="let item of infectionData">
-    {{item | json}}
+<ul *ngIf="(data$ | async) as data">
+  <li *ngFor="let header of data.header">
+    <span>{{header | translate}}:</span>
+    <span *ngIf="data.items.length" [ngSwitch]="header">
+      <span *ngSwitchCase="'createDt'"> {{data.items[0][header] | date: 'yyyy-MM-dd' }}</span>
+      <span *ngSwitchCase="'qurRate'"> {{data.items[0][header] !== '-' ? (data.items[0][header] | percent) : data.items[0][header] }}</span>
+      <span *ngSwitchCase="'incDec'">{{data.items[0][header] | number: '1.0-2' }}</span>
+      <span *ngSwitchCase="'isolIngCnt'">{{data.items[0][header] | number: '1.0-2' }}</span>
+      <span *ngSwitchCase="'isolClearCnt'">{{data.items[0][header] | number: '1.0-2' }}</span>
+      <span *ngSwitchCase="'localOccCnt'">{{data.items[0][header] | number: '1.0-2' }}</span>
+      <span *ngSwitchCase="'overFlowCnt'">{{data.items[0][header] | number: '1.0-2' }}</span>
+      <span *ngSwitchCase="'defCnt'">{{data.items[0][header] | number: '1.0-2' }}</span>
+      <span *ngSwitchDefault> {{data.items[0][header] }}</span>
+    </span>
   </li>
 </ul>
+<city-detail></city-detail>

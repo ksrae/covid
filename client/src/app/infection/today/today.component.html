@@ -1,17 +1,18 @@
 <p>today works!</p>
 
 <p>오늘 기록</p>
-<ng-container *ngIf="(infectionData$ | async) as item">
-  <p>{{item[0] | json}}</p>
+<ng-container *ngIf="(data$ | async) as data">
   <ul>
-    <li *ngFor="let name of header">
-      <span>{{name | translate}}:</span>
-      <span>{{name !== 'createDt' ? (item[0][name] | number: '1.0-5') : (item[0][name] | date: 'yyyy-MM-dd') }}</span>
+    <li *ngFor="let header of data.header">
+      <span>{{header | translate}}:</span>
+      <span *ngIf="data.items.length">
+        {{header !== 'createDt' ? (data.items[0][header] | number: '1.0-5') : (data.items[0][header] | date: 'yyyy-MM-dd') }}
+      </span>
     </li>
   </ul>
 
-  <today-detail [header]="header" [data]="item"></today-detail>
-
+  <!-- <today-detail *ngIf="data.today.length" [header]="data.header" [data]="data.today"></today-detail> -->
+<today-detail></today-detail>
 
 </ng-container>
 

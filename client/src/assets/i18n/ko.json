@@ -1,5 +1,5 @@
 {
-  "accDefRate": "누적환진률",
+  "accDefRate": "누적확진률",
   "accExamCnt": "누적검사수",
   "accExamCompCnt": "누적검사완료수",
   "careCnt": "치료중 환자수",
@@ -13,5 +13,18 @@
   "nationNm": "국가명",
   "natDeathCnt": "국가별 사망자 수",
   "natDeathRate": "확진률 대비 사망률",
-  "natDefCnt": "국가별 확진자 수"
+  "natDefCnt": "국가별 확진자 수",
+  "gubun": "구분",
+  "incDec": "전일대비 증감 수",
+  "isolClearCnt": "격리해제 수",
+  "isolIngCnt": "격리중 환자수",
+  "localOccCnt": "지역 발생자 수",
+  "overFlowCnt": "해외유입 수",
+  "qurRate": "10만명당 발생률",
+  "defCnt": "확진자 수",
+  "confCase": "확진자",
+  "confCaseRate": "확진률",
+  "criticalRate": "치명률",
+  "death": "사망자",
+  "deathRate": "사망률"
 }

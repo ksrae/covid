@@ -10,9 +10,11 @@ import { CommonModule } from '@angular/common';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { TodayDetailComponent } from './today/today-detail/today-detail.component';
 import { NationalDetailComponent } from './national/national-detail/national-detail.component';
+import { CityDetailComponent } from './city/city-detail/city-detail.component';
+import { GenageDetailComponent } from './genage/genage-detail/genage-detail.component';
 
 @NgModule({
-  declarations: [InfectionComponent, TodayComponent, NationalComponent, CityComponent, GenageComponent, TodayDetailComponent, NationalDetailComponent],
+  declarations: [InfectionComponent, TodayComponent, NationalComponent, CityComponent, GenageComponent, TodayDetailComponent, NationalDetailComponent, CityDetailComponent, GenageDetailComponent],
   imports: [
     CommonModule,
     InfectionRoutingModule,

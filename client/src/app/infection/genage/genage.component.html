@@ -1,7 +1,13 @@
 <p>genage works!</p>
 
-<ul *ngIf="(infectionData$ | async) as infectionData">
-  <li *ngFor="let item of infectionData">
-    {{item | json}}
+<ul *ngIf="(data$ | async) as data">
+  <li *ngFor="let header of data.header">
+    <span>{{header | translate}}:</span>
+    <span *ngIf="data.items.length" [ngSwitch]="header">
+      <span *ngSwitchCase="'createDt'"> {{data.items[0][header] | date: 'yyyy-MM-dd' }}</span>
+      <span *ngSwitchCase="'gubun'"> {{data.items[0][header] }}</span>
+      <span *ngSwitchDefault> {{data.items[0][header] | number: '1.0-2' }}</span>
+    </span>
   </li>
 </ul>
+<genage-detail></genage-detail>
