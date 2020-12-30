@@ -1,0 +1,17 @@
+{
+  "accDefRate": "누적환진률",
+  "accExamCnt": "누적검사수",
+  "accExamCompCnt": "누적검사완료수",
+  "careCnt": "치료중 환자수",
+  "clearCnt": "격리해제수",
+  "createDt": "등록일시",
+  "deathCnt": "사망자 수",
+  "decideCnt": "확진자수",
+  "examCnt": "검사진행수",
+  "resutlNegCnt": "결과음성수",
+  "areaNm": "지역명",
+  "nationNm": "국가명",
+  "natDeathCnt": "국가별 사망자 수",
+  "natDeathRate": "확진률 대비 사망률",
+  "natDefCnt": "국가별 확진자 수"
+}

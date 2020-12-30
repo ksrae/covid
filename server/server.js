@@ -40,9 +40,9 @@ app.set('views', DIST_FOLDER);
 //   });
 // });
 
-var currentDate = `${new Date().getFullYear()}${new Date().getMonth()}${new Date().getDate()}`;
-var weekago = new Date(new Date().setDate(new Date().getDate() - 7));
-var previousDate = `${weekago.getFullYear()}${weekago.getMonth()}${weekago.getDate()}`;
+// var currentDate = `${new Date().getFullYear()}${new Date().getMonth()}${new Date().getDate()}`;
+// var weekago = new Date(new Date().setDate(new Date().getDate() - 7));
+// var previousDate = `${weekago.getFullYear()}${weekago.getMonth()}${weekago.getDate()}`;
 
 app.get('/', async (req, res) => {
   res.send('Hello World!')
@@ -52,28 +52,57 @@ app.get('/', async (req, res) => {
   // console.log(result);
 })
 
-app.get('/today', async (req,res) => {
+app.get('/todayInfection', async (req,res) => {
   // 앞으로 db를 바라봐야 합니다.
-  let result = await getInfectionState(previousDate, currentDate);
-  console.log(result);
-  return res.json(result);
+  if(!req.query)
+    res.json({});
+
+  let previousDate = req.query.previousDate ? req.query.previousDate : undefined;
+  let currentDate = req.query.currentDate ? req.query.currentDate : undefined;
+  if(currentDate && previousDate && currentDate >= previousDate) {
+    let result = await getTodayInfectionState(previousDate, currentDate);
+    //console.log(result);
+    return res.json(result);
+  }  
 })
 
 app.get('/nationalInfection', async (req,res) => {
-  let result = await getNationalInfectionState(previousDate, currentDate);
-  console.log(result);
-  return res.json(result);
+  if(!req.query)
+    res.json({});
+
+  let previousDate = req.query.previousDate ? req.query.previousDate : undefined;
+  let currentDate = req.query.currentDate ? req.query.currentDate : undefined;
+  if(currentDate && previousDate && currentDate >= previousDate) {
+    let result = await getNationalInfectionState(previousDate, currentDate);
+    //console.log(result);
+    return res.json(result);
+  }
 })
+
 app.get('/cityInfection', async (req,res) => {
-  console.log('called');
-  let result = await getCityInfectionState(previousDate, currentDate);
-  console.log(result);
-  return res.json(result);
+  if(!req.query)
+    res.json({});
+
+  let previousDate = req.query.previousDate ? req.query.previousDate : undefined;
+  let currentDate = req.query.currentDate ? req.query.currentDate : undefined;
+  if(currentDate && previousDate && currentDate >= previousDate) {
+    let result = await getCityInfectionState(previousDate, currentDate);
+    //console.log(result);
+    return res.json(result);
+  }
 })
+
 app.get('/genInfection', async (req,res) => {
-  let result = await getGenAgeInfectionState(previousDate, currentDate);
-  console.log(result);
-  return res.json(result);
+  if(!req.query)
+  res.json({});
+
+  let previousDate = req.query.previousDate ? req.query.previousDate : undefined;
+  let currentDate = req.query.currentDate ? req.query.currentDate : undefined;
+  if(currentDate && previousDate && currentDate >= previousDate) {
+    let result = await getGenAgeInfectionState(previousDate, currentDate);
+    //console.log(result);
+    return res.json(result);
+  }
 })
 
 app.listen(PORT, () => {
@@ -92,21 +121,26 @@ app.listen(PORT, () => {
 // 이걸 db에 쌓고
 // 값은 db에서 가져감
 // 만약 db에 값이 없으면 request 강제 실행
-async function getInfectionState(previousDate, currentDate) {
+async function getTodayInfectionState(previousDate, currentDate) {
   let parsing = JSON.parse(await requestInfectionState(previousDate, currentDate));
-  return parsing.response.body.items.item;
+  let items = getTextValue(parsing.response.body.items.item);
+  // console.log(items);
+  return items;
 }
 async function getNationalInfectionState(previousDate, currentDate) {
   let parsing = JSON.parse(await requestNationalInfectionState(previousDate, currentDate));
-  return parsing.response.body.items.item;
+  let items = getTextValue(parsing.response.body.items.item);
+  return items;
 }
 async function getCityInfectionState(previousDate, currentDate) {
   let parsing = JSON.parse(await requestCityInfectionState(previousDate, currentDate));
-  return parsing.response.body.items.item;
+  let items = getTextValue(parsing.response.body.items.item);
+  return items;
 }
 async function getGenAgeInfectionState(previousDate, currentDate) {
   let parsing = JSON.parse(await requestGenAgeInfectionState(previousDate, currentDate));
-  return parsing.response.body.items.item;
+  let items = getTextValue(parsing.response.body.items.item);
+  return items;
 }
 
 async function requestInfectionState(previousDate, currentDate) {
@@ -133,5 +167,16 @@ async function requestOpenApi(url, previousDate, currentDate) {
 
   return convert.xml2json(result, {compact: true});
 }
+function getTextValue(items) {
+  if(items && items.length) {
+    for(let data of items) {
+      for(let item in data) {
+        data[item] = data[item]['_text'];
+      }
+    }
+  }
+  return items;
+}
+
 
 

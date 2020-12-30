@@ -1,25 +1,22 @@
-import { MatToolbarModule } from '@angular/material/toolbar';
-import {MatIconModule} from '@angular/material/icon';
-import {MatTabsModule} from '@angular/material/tabs';
+
+
+import {MatTableModule} from '@angular/material/table';
 import { NgModule } from '@angular/core';
-
-
+import {MatSortModule } from '@angular/material/sort';
+import {TranslateModule} from '@ngx-translate/core';
 @NgModule({
   declarations: [
   ],
   imports: [
-
-    MatToolbarModule,
-
-    MatIconModule,
-    MatTabsModule
+    MatSortModule,
+    MatTableModule,
+    TranslateModule.forChild()
   ],
   providers: [],
   exports: [
-    MatToolbarModule,
-
-    MatIconModule,
-    MatTabsModule
+    MatSortModule,
+    MatTableModule,
+    TranslateModule
   ]
 })
 export class SharedModule { }

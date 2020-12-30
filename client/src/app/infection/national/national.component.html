@@ -1,7 +1,22 @@
 <p>national works!</p>
 
-<ul *ngIf="(infectionData$ | async) as infectionData">
-  <li *ngFor="let item of infectionData">
-    {{item | json}}
-  </li>
-</ul>
+<!-- <p>오늘 기록</p> -->
+<ng-container *ngIf="(infectionData$ | async) as item">
+  <p>{{item[0] | json}}</p>
+  <ul>
+    <li *ngFor="let name of header">
+      <span>{{name | translate}}:</span>
+      <span [ngSwitch]="item[0][name]">
+        <span *ngSwitchCase="'createDt'"> {{item[0][name] | date: 'yyyy-MM-dd' }}</span>
+        <span *ngSwitchCase="'natDeathCnt'"> {{item[0][name] | number: '1.0-2' }}</span>
+        <span *ngSwitchCase="'natDeathRate'"> {{item[0][name] | number: '1.0-2' }}</span>
+        <span *ngSwitchCase="'natDefCnt'"> {{item[0][name] | number: '1.0-2' }}</span>
+        <span *ngSwitchDefault> {{item[0][name] }}</span>
+      </span>
+    </li>
+  </ul>
+  <national-detail [header]="header" [data]="item"></national-detail>
+
+
+</ng-container>
+

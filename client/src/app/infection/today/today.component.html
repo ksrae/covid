@@ -1,7 +1,38 @@
 <p>today works!</p>
 
-<ul *ngIf="(infectionData$ | async) as infectionData">
-  <li *ngFor="let item of infectionData">
-    {{item | json}}
-  </li>
-</ul>
+<p>오늘 기록</p>
+<ng-container *ngIf="(infectionData$ | async) as item">
+  <p>{{item[0] | json}}</p>
+  <ul>
+    <li *ngFor="let name of header">
+      <span>{{name | translate}}:</span>
+      <span>{{name !== 'createDt' ? (item[0][name] | number: '1.0-5') : (item[0][name] | date: 'yyyy-MM-dd') }}</span>
+    </li>
+  </ul>
+
+  <today-detail [header]="header" [data]="item"></today-detail>
+
+
+</ng-container>
+
+
+
+
+<!-- <ngx-charts-line-chart
+  [view]="view"
+  [scheme]="colorScheme"
+  [legend]="legend"
+  [showXAxisLabel]="showXAxisLabel"
+  [showYAxisLabel]="showYAxisLabel"
+  [xAxis]="xAxis"
+  [yAxis]="yAxis"
+  [xAxisLabel]="xAxisLabel"
+  [yAxisLabel]="yAxisLabel"
+  [timeline]="timeline"
+  [results]="sample"
+  (select)="onSelect($event)"
+  (activate)="onActivate($event)"
+  (deactivate)="onDeactivate($event)"
+  >
+</ngx-charts-line-chart> -->
+
